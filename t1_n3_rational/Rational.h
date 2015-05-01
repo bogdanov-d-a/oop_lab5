@@ -9,6 +9,8 @@ public:
 	double ToDouble() const;
 	CRational const operator+() const;
 	CRational const operator-() const;
+	CRational& operator+=(CRational const& other);
+	CRational& operator-=(CRational const& other);
 
 private:
 	int m_numerator, m_denominator;

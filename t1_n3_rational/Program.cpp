@@ -153,3 +153,31 @@ BOOST_AUTO_TEST_CASE(TestBinaryMinus)
 	BOOST_CHECK(CRational(1, 2) - 1 == CRational(-1, 2));
 	BOOST_CHECK(1 - CRational(1, 2) == CRational(1, 2));
 }
+
+BOOST_AUTO_TEST_CASE(TestAssigningAddition)
+{
+	{
+		CRational r(1, 2);
+		r += CRational(1, 6);
+		BOOST_CHECK(r == CRational(2, 3));
+	}
+	{
+		CRational r(1, 2);
+		r += 1;
+		BOOST_CHECK(r == CRational(3, 2));
+	}
+}
+
+BOOST_AUTO_TEST_CASE(TestAssigningSubtraction)
+{
+	{
+		CRational r(1, 2);
+		r -= CRational(1, 6);
+		BOOST_CHECK(r == CRational(1, 3));
+	}
+	{
+		CRational r(1, 2);
+		r -= 1;
+		BOOST_CHECK(r == CRational(-1, 2));
+	}
+}

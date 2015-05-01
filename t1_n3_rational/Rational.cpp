@@ -45,6 +45,18 @@ CRational const CRational::operator-() const
 	return CRational(-m_numerator, m_denominator);
 }
 
+CRational& CRational::operator+=(CRational const& other)
+{
+	*this = *this + other;
+	return *this;
+}
+
+CRational& CRational::operator-=(CRational const& other)
+{
+	*this = *this - other;
+	return *this;
+}
+
 void CRational::Normalize()
 {
 	const int gcd = GCD(abs(m_numerator), m_denominator);
