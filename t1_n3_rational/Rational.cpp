@@ -69,6 +69,14 @@ CRational& CRational::operator/=(CRational const& other)
 	return *this;
 }
 
+pair<int, CRational> CRational::ToCompoundFraction() const
+{
+	int const signMultiplier = (m_numerator < 0) ? -1 : 1;
+
+	return pair<int, CRational>(signMultiplier * (abs(m_numerator) / m_denominator),
+		CRational(signMultiplier * (abs(m_numerator) % m_denominator), m_denominator));
+}
+
 void CRational::Normalize()
 {
 	const int gcd = GCD(abs(m_numerator), m_denominator);

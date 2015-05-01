@@ -13,6 +13,7 @@ public:
 	CRational& operator-=(CRational const& other);
 	CRational& operator*=(CRational const& other);
 	CRational& operator/=(CRational const& other);
+	std::pair<int, CRational> ToCompoundFraction() const;
 
 private:
 	int m_numerator, m_denominator;

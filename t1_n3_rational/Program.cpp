@@ -287,3 +287,21 @@ BOOST_AUTO_TEST_CASE(TestInputStream)
 		BOOST_CHECK(r == CRational(-1, 3));
 	}
 }
+
+BOOST_AUTO_TEST_CASE(TestMixedNumbers)
+{
+	BOOST_CHECK(CRational(9, 4).ToCompoundFraction() ==
+		(pair<int, CRational>(2, CRational(1, 4))));
+
+	BOOST_CHECK(CRational(-9, 4).ToCompoundFraction() ==
+		(pair<int, CRational>(-2, CRational(-1, 4))));
+
+	BOOST_CHECK(CRational(33, 11).ToCompoundFraction() ==
+		(pair<int, CRational>(3, CRational(0, 1))));
+
+	BOOST_CHECK(CRational(-1, 13).ToCompoundFraction() ==
+		(pair<int, CRational>(0, CRational(-1, 13))));
+
+	BOOST_CHECK(CRational(0, 1).ToCompoundFraction() ==
+		(pair<int, CRational>(0, CRational(0, 1))));
+}
