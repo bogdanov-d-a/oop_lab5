@@ -87,3 +87,8 @@ BOOST_AUTO_TEST_CASE(RationalsAreNormalizedAfterCreation)
 		BOOST_CHECK_EQUAL(r.GetDenominator(), 2);
 	}
 }
+
+BOOST_AUTO_TEST_CASE(CanReturnDecimal)
+{
+	BOOST_CHECK_CLOSE(CRational(3, 5).ToDouble(), 0.6, DBL_EPSILON);
+}
