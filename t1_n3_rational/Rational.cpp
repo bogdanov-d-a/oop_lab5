@@ -51,3 +51,14 @@ unsigned GCD(unsigned a, unsigned b)
 	}
 	return (a != 0) ? a : 1;
 }
+
+bool const operator==(CRational const& a, CRational const& b)
+{
+	return (a.GetNumerator() == b.GetNumerator() &&
+		a.GetDenominator() == b.GetDenominator());
+}
+
+bool const operator!=(CRational const& a, CRational const& b)
+{
+	return !(a == b);
+}

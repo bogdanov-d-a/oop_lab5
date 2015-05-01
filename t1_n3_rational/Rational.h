@@ -14,3 +14,5 @@ private:
 };
 
 unsigned GCD(unsigned a, unsigned b);
+bool const operator==(CRational const& a, CRational const& b);
+bool const operator!=(CRational const& a, CRational const& b);

@@ -92,3 +92,29 @@ BOOST_AUTO_TEST_CASE(CanReturnDecimal)
 {
 	BOOST_CHECK_CLOSE(CRational(3, 5).ToDouble(), 0.6, DBL_EPSILON);
 }
+
+BOOST_AUTO_TEST_CASE(TestEquality)
+{
+	{
+		CRational const a(1, 2);
+		CRational const b(a);
+		BOOST_CHECK(a == b);
+		BOOST_CHECK(!(a != b));
+	}
+	{
+		CRational const a(1, 4);
+		CRational const b(4, 16);
+		BOOST_CHECK(a == b);
+		BOOST_CHECK(!(a != b));
+	}
+	{
+		CRational const r(1, 4);
+		BOOST_CHECK(!(r == 2));
+		BOOST_CHECK(r != 2);
+	}
+	{
+		CRational const r(3);
+		BOOST_CHECK(3 == r);
+		BOOST_CHECK(!(3 != r));
+	}
+}
