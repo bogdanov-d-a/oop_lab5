@@ -100,3 +100,18 @@ CRational const operator-(CRational const& a, CRational const& b)
 {
 	return (a + (-b));
 }
+
+CRational const operator*(CRational const& a, CRational const& b)
+{
+	return CRational(a.GetNumerator() * b.GetNumerator(), a.GetDenominator() * b.GetDenominator());
+}
+
+CRational const operator/(CRational const& a, CRational const& b)
+{
+	if (b.GetNumerator() == 0)
+	{
+		throw invalid_argument("Can't divide by zero");
+	}
+
+	return CRational(a.GetNumerator() * b.GetDenominator(), a.GetDenominator() * b.GetNumerator());
+}
