@@ -147,3 +147,26 @@ bool const operator>=(CRational const& a, CRational const& b)
 {
 	return (a == b || a > b);
 }
+
+ostream& operator<<(ostream &out, CRational const& num)
+{
+	return (out << num.GetNumerator() << "/" << num.GetDenominator());
+}
+
+istream& operator>>(istream &in, CRational &num)
+{
+	streamoff const startPos = in.tellg();
+
+	int numerator, denominator;
+	if ((in >> numerator) && (in.get() == '/') && (in >> denominator))
+	{
+		num = CRational(numerator, denominator);
+	}
+	else
+	{
+		in.seekg(startPos);
+		in.setstate(in.rdstate() | ios_base::failbit);
+	}
+
+	return in;
+}

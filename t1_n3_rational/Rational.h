@@ -31,3 +31,5 @@ bool const operator<(CRational const& a, CRational const& b);
 bool const operator<=(CRational const& a, CRational const& b);
 bool const operator>(CRational const& a, CRational const& b);
 bool const operator>=(CRational const& a, CRational const& b);
+std::ostream& operator<<(std::ostream &out, CRational const& num);
+std::istream& operator>>(std::istream &in, CRational &num);

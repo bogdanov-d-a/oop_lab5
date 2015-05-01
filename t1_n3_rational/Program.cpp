@@ -4,6 +4,8 @@
 #include "stdafx.h"
 #include "Rational.h"
 
+using namespace std;
+
 BOOST_AUTO_TEST_CASE(IsEqualToZeroByDefault)
 {
 	CRational r;
@@ -254,4 +256,34 @@ BOOST_AUTO_TEST_CASE(TestComparison)
 	BOOST_CHECK(CRational(1, 2) < 7);
 	BOOST_CHECK(3 <= CRational(7, 2));
 	BOOST_CHECK(!(3 >= CRational(8, 2)));
+}
+
+BOOST_AUTO_TEST_CASE(TestOutputStream)
+{
+	{
+		ostringstream oss;
+		oss << CRational(2, 45);
+		BOOST_CHECK_EQUAL(oss.str(), "2/45");
+	}
+	{
+		ostringstream oss;
+		oss << CRational(-2, 3);
+		BOOST_CHECK_EQUAL(oss.str(), "-2/3");
+	}
+}
+
+BOOST_AUTO_TEST_CASE(TestInputStream)
+{
+	{
+		istringstream iss("7/15");
+		CRational r;
+		iss >> r;
+		BOOST_CHECK(r == CRational(7, 15));
+	}
+	{
+		istringstream iss("-1/3");
+		CRational r;
+		iss >> r;
+		BOOST_CHECK(r == CRational(-1, 3));
+	}
 }
