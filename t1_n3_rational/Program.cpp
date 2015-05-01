@@ -1,4 +1,4 @@
-// Rational.cpp : Defines the entry point for the console application.
+// Program.cpp : Defines the entry point for the console application.
 //
 
 #include "stdafx.h"
