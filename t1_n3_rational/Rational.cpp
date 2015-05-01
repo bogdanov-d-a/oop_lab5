@@ -35,6 +35,16 @@ double CRational::ToDouble() const
 	return (1.0 * m_numerator / m_denominator);
 }
 
+CRational const CRational::operator+() const
+{
+	return *this;
+}
+
+CRational const CRational::operator-() const
+{
+	return CRational(-m_numerator, m_denominator);
+}
+
 void CRational::Normalize()
 {
 	const int gcd = GCD(abs(m_numerator), m_denominator);

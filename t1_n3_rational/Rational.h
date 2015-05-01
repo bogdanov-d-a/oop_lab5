@@ -7,6 +7,8 @@ public:
 	int GetNumerator() const;
 	int GetDenominator() const;
 	double ToDouble() const;
+	CRational const operator+() const;
+	CRational const operator-() const;
 
 private:
 	int m_numerator, m_denominator;

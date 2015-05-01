@@ -118,3 +118,23 @@ BOOST_AUTO_TEST_CASE(TestEquality)
 		BOOST_CHECK(!(3 != r));
 	}
 }
+
+BOOST_AUTO_TEST_CASE(TestUnaryPlus)
+{
+	{
+		CRational const a(3, 5);
+		CRational const b(+a);
+		BOOST_CHECK(a == b);
+	}
+	{
+		CRational const a(-4, 7);
+		CRational const b(+a);
+		BOOST_CHECK(a == b);
+	}
+}
+
+BOOST_AUTO_TEST_CASE(TestUnaryMinus)
+{
+	BOOST_CHECK(-CRational(3, 5) == CRational(-3, 5));
+	BOOST_CHECK(-CRational(4, 7) == CRational(-4, 7));
+}
