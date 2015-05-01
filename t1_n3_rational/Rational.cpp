@@ -62,6 +62,11 @@ unsigned GCD(unsigned a, unsigned b)
 	return (a != 0) ? a : 1;
 }
 
+unsigned LCM(unsigned a, unsigned b)
+{
+	return (a / GCD(a, b) * b);
+}
+
 bool const operator==(CRational const& a, CRational const& b)
 {
 	return (a.GetNumerator() == b.GetNumerator() &&
@@ -71,4 +76,15 @@ bool const operator==(CRational const& a, CRational const& b)
 bool const operator!=(CRational const& a, CRational const& b)
 {
 	return !(a == b);
+}
+
+CRational const operator+(CRational const& a, CRational const& b)
+{
+	unsigned const lcm = LCM(a.GetDenominator(), b.GetDenominator());
+	return CRational(a.GetNumerator() * (lcm / a.GetDenominator()) + b.GetNumerator() * (lcm / b.GetDenominator()), lcm);
+}
+
+CRational const operator-(CRational const& a, CRational const& b)
+{
+	return (a + (-b));
 }

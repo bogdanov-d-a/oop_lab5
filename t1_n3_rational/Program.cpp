@@ -138,3 +138,18 @@ BOOST_AUTO_TEST_CASE(TestUnaryMinus)
 	BOOST_CHECK(-CRational(3, 5) == CRational(-3, 5));
 	BOOST_CHECK(-CRational(4, 7) == CRational(-4, 7));
 }
+
+BOOST_AUTO_TEST_CASE(TestBinaryPlus)
+{
+	BOOST_CHECK(CRational(1, 2) + CRational(1, 6) == CRational(2, 3));
+	BOOST_CHECK(CRational(1, 4) + 2 == CRational(9, 4));
+	BOOST_CHECK(1 + CRational(1, 2) == CRational(3, 2));
+	BOOST_CHECK(CRational(1, 2) + CRational(-1, 3) == CRational(1, 6));
+}
+
+BOOST_AUTO_TEST_CASE(TestBinaryMinus)
+{
+	BOOST_CHECK(CRational(1, 2) - CRational(1, 6) == CRational(1, 3));
+	BOOST_CHECK(CRational(1, 2) - 1 == CRational(-1, 2));
+	BOOST_CHECK(1 - CRational(1, 2) == CRational(1, 2));
+}
