@@ -217,3 +217,31 @@ BOOST_AUTO_TEST_CASE(TestDivision)
 	BOOST_CHECK(CRational(1, 2) / 5 == CRational(1, 10));
 	BOOST_CHECK(7 / CRational(2, 3) == CRational(21, 2));
 }
+
+BOOST_AUTO_TEST_CASE(TestAssigningMultiplication)
+{
+	{
+		CRational r(1, 2);
+		r *= CRational(2, 3);
+		BOOST_CHECK(r == CRational(1, 3));
+	}
+	{
+		CRational r(1, 2);
+		r *= 3;
+		BOOST_CHECK(r == CRational(3, 2));
+	}
+}
+
+BOOST_AUTO_TEST_CASE(TestAssigningDivision)
+{
+	{
+		CRational r(1, 2);
+		r /= CRational(2, 3);
+		BOOST_CHECK(r == CRational(3, 4));
+	}
+	{
+		CRational r(1, 2);
+		r /= 3;
+		BOOST_CHECK(r == CRational(1, 6));
+	}
+}

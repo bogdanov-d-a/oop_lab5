@@ -11,6 +11,8 @@ public:
 	CRational const operator-() const;
 	CRational& operator+=(CRational const& other);
 	CRational& operator-=(CRational const& other);
+	CRational& operator*=(CRational const& other);
+	CRational& operator/=(CRational const& other);
 
 private:
 	int m_numerator, m_denominator;
