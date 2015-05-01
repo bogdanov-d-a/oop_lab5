@@ -27,3 +27,7 @@ CRational const operator+(CRational const& a, CRational const& b);
 CRational const operator-(CRational const& a, CRational const& b);
 CRational const operator*(CRational const& a, CRational const& b);
 CRational const operator/(CRational const& a, CRational const& b);
+bool const operator<(CRational const& a, CRational const& b);
+bool const operator<=(CRational const& a, CRational const& b);
+bool const operator>(CRational const& a, CRational const& b);
+bool const operator>=(CRational const& a, CRational const& b);

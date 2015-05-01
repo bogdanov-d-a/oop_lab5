@@ -245,3 +245,13 @@ BOOST_AUTO_TEST_CASE(TestAssigningDivision)
 		BOOST_CHECK(r == CRational(1, 6));
 	}
 }
+
+BOOST_AUTO_TEST_CASE(TestComparison)
+{
+	BOOST_CHECK(CRational(1, 2) >= CRational(1, 3));
+	BOOST_CHECK(!(CRational(1, 2) <= CRational(1, 3)));
+	BOOST_CHECK(CRational(3, 1) >= 2);
+	BOOST_CHECK(CRational(1, 2) < 7);
+	BOOST_CHECK(3 <= CRational(7, 2));
+	BOOST_CHECK(!(3 >= CRational(8, 2)));
+}

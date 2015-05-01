@@ -127,3 +127,23 @@ CRational const operator/(CRational const& a, CRational const& b)
 
 	return CRational(a.GetNumerator() * b.GetDenominator(), a.GetDenominator() * b.GetNumerator());
 }
+
+bool const operator<(CRational const& a, CRational const& b)
+{
+	return (a.ToDouble() < b.ToDouble());
+}
+
+bool const operator<=(CRational const& a, CRational const& b)
+{
+	return (a == b || a < b);
+}
+
+bool const operator>(CRational const& a, CRational const& b)
+{
+	return (a.ToDouble() > b.ToDouble());
+}
+
+bool const operator>=(CRational const& a, CRational const& b)
+{
+	return (a == b || a > b);
+}
