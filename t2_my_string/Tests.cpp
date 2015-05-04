@@ -192,3 +192,29 @@ BOOST_AUTO_TEST_CASE(TestClearString)
 	a.Clear();
 	BOOST_CHECK_EQUAL(a.GetLength(), 0);
 }
+
+BOOST_AUTO_TEST_CASE(TestAssigningConcatenation)
+{
+	{
+		CMyString s("abc");
+		s += "def";
+		BOOST_CHECK(s == "abcdef");
+	}
+	{
+		CMyString s("abc");
+		s += "";
+		BOOST_CHECK(s == "abc");
+	}
+	{
+		CMyString s;
+		s += "def";
+		BOOST_CHECK(s == "def");
+	}
+}
+
+BOOST_AUTO_TEST_CASE(TestConcatenation)
+{
+	BOOST_CHECK(CMyString("abc") + CMyString("def") == CMyString("abcdef"));
+	BOOST_CHECK("abc" + CMyString("def") == CMyString("abcdef"));
+	BOOST_CHECK(string("abc") + CMyString("def") == CMyString("abcdef"));
+}

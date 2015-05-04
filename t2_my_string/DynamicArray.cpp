@@ -109,6 +109,33 @@ void CDynamicArray::Assign(size_t size)
 	InitData();
 }
 
+void CDynamicArray::Resize(size_t size)
+{
+	m_size = size;
+
+	if (m_size == 0)
+	{
+		free(m_data);
+		m_data = nullptr;
+	}
+	else
+	{
+		if (m_data == nullptr)
+		{
+			InitData();
+		}
+		else
+		{
+			char *newData = static_cast<char*>(realloc(m_data, m_size));
+			if (newData == nullptr)
+			{
+				throw runtime_error("CDynamicArray bad allocation");
+			}
+			m_data = newData;
+		}
+	}
+}
+
 char const* CDynamicArray::GetData() const
 {
 	return m_data;

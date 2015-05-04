@@ -54,6 +54,20 @@ void CMyString::Clear()
 	m_data[0] = '\0';
 }
 
+CMyString& CMyString::operator+=(CMyString const& other)
+{
+	if (other.GetLength() == 0)
+	{
+		return *this;
+	}
+
+	size_t const oldLength = GetLength();
+	m_data.Resize(GetLength() + other.GetLength() + 1);
+	memcpy(m_data.GetData() + oldLength, other.GetStringData(), other.GetLength() + 1);
+
+	return *this;
+}
+
 bool const CMyString::operator==(CMyString const& other) const
 {
 	return (m_data == other.m_data);
@@ -62,4 +76,11 @@ bool const CMyString::operator==(CMyString const& other) const
 bool const CMyString::operator!=(CMyString const& other) const
 {
 	return !(*this == other);
+}
+
+CMyString const operator+(CMyString const& a, CMyString const& b)
+{
+	CMyString result(a);
+	result += b;
+	return result;
 }

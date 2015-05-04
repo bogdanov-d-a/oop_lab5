@@ -19,6 +19,7 @@ public:
 
 	size_t GetSize() const;
 	void Assign(size_t size = 0);
+	void Resize(size_t size);
 
 	char const* GetData() const;
 	char* GetData();
