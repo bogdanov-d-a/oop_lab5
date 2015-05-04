@@ -101,6 +101,16 @@ size_t CDynamicArray::GetSize() const
 	return m_size;
 }
 
+char const* CDynamicArray::GetData() const
+{
+	return m_data;
+}
+
+char* CDynamicArray::GetData()
+{
+	return m_data;
+}
+
 void CDynamicArray::InitData()
 {
 	if (m_size != 0)

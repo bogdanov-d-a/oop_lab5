@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "DynamicArray.h"
+#include "MyString.h"
 
 using namespace std;
 
@@ -130,4 +131,29 @@ BOOST_AUTO_TEST_CASE(TestDynamicArraySelfAssignment)
 
 	b = move(b);
 	BOOST_CHECK(a == b);
+}
+
+BOOST_AUTO_TEST_CASE(CanCreateEmptyString)
+{
+	CMyString s;
+	BOOST_CHECK_EQUAL(s.GetLength(), 0);
+	BOOST_CHECK_EQUAL(strlen(s.GetStringData()), 0);
+}
+
+BOOST_AUTO_TEST_CASE(StringCanBeCreatedByPString)
+{
+	char const* testStr = "test string";
+	CMyString s(testStr);
+
+	BOOST_CHECK_EQUAL(s.GetLength(), 11);
+	BOOST_CHECK(strcmp(s.GetStringData(), testStr) == 0);
+}
+
+BOOST_AUTO_TEST_CASE(StringCanBeCreatedByPStringWithLength)
+{
+	char const* testStr = "str1\0str2";
+	CMyString s(testStr, 9);
+
+	BOOST_CHECK_EQUAL(s.GetLength(), 9);
+	BOOST_CHECK(memcmp(s.GetStringData(), testStr, 10) == 0);
 }

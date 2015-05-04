@@ -13,9 +13,14 @@ public:
 
 	char const operator[](size_t index) const;
 	char& operator[](size_t index);
+
 	bool const operator==(CDynamicArray const& other) const;
 	bool const operator!=(CDynamicArray const& other) const;
+
 	size_t GetSize() const;
+
+	char const* GetData() const;
+	char* GetData();
 
 private:
 	size_t m_size;
