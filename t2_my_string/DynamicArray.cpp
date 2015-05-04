@@ -4,19 +4,19 @@
 using namespace std;
 
 CDynamicArray::CDynamicArray(size_t size)
-	:m_size(size)
+	:m_data(nullptr)
 {
-	InitData();
+	Assign(size);
 }
 
 CDynamicArray::CDynamicArray(CDynamicArray const& other)
-	:CDynamicArray(0)
+	:m_data(nullptr)
 {
 	*this = other;
 }
 
 CDynamicArray::CDynamicArray(CDynamicArray &&other)
-	:CDynamicArray(0)
+	:m_data(nullptr)
 {
 	*this = move(other);
 }
@@ -99,6 +99,14 @@ bool const CDynamicArray::operator!=(CDynamicArray const& other) const
 size_t CDynamicArray::GetSize() const
 {
 	return m_size;
+}
+
+void CDynamicArray::Assign(size_t size)
+{
+	m_size = size;
+
+	free(m_data);
+	InitData();
 }
 
 char const* CDynamicArray::GetData() const

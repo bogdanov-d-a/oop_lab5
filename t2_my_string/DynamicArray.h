@@ -18,6 +18,7 @@ public:
 	bool const operator!=(CDynamicArray const& other) const;
 
 	size_t GetSize() const;
+	void Assign(size_t size = 0);
 
 	char const* GetData() const;
 	char* GetData();

@@ -157,3 +157,38 @@ BOOST_AUTO_TEST_CASE(StringCanBeCreatedByPStringWithLength)
 	BOOST_CHECK_EQUAL(s.GetLength(), 9);
 	BOOST_CHECK(memcmp(s.GetStringData(), testStr, 10) == 0);
 }
+
+BOOST_AUTO_TEST_CASE(StringCanBeCreatedByStlString)
+{
+	string testStr("str1");
+	testStr.push_back('\0');
+	testStr += "str2";
+
+	CMyString s(testStr);
+
+	BOOST_CHECK_EQUAL(s.GetLength(), 9);
+	BOOST_CHECK(memcmp(s.GetStringData(), testStr.c_str(), 10) == 0);
+}
+
+BOOST_AUTO_TEST_CASE(TestStringEquality)
+{
+	BOOST_CHECK(CMyString() == CMyString());
+	BOOST_CHECK(CMyString("test") == CMyString("test"));
+	BOOST_CHECK(CMyString("test1") != CMyString("test2"));
+}
+
+BOOST_AUTO_TEST_CASE(TestSubstringGeneration)
+{
+	BOOST_CHECK(CMyString("abcde").SubString(2) == CMyString("cde"));
+	BOOST_CHECK(CMyString("abcde").SubString(0, 0) == CMyString());
+	BOOST_CHECK(CMyString("abcde").SubString(4) == CMyString("e"));
+	BOOST_CHECK(CMyString("abcde").SubString(0) == CMyString("abcde"));
+	BOOST_CHECK(CMyString("abcde").SubString(1, 2) == CMyString("bc"));
+}
+
+BOOST_AUTO_TEST_CASE(TestClearString)
+{
+	CMyString a("test");
+	a.Clear();
+	BOOST_CHECK_EQUAL(a.GetLength(), 0);
+}
