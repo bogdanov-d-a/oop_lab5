@@ -68,14 +68,14 @@ CMyString& CMyString::operator+=(CMyString const& other)
 	return *this;
 }
 
-bool const CMyString::operator==(CMyString const& other) const
+bool const operator==(CMyString const& a, CMyString const& b)
 {
-	return (m_data == other.m_data);
+	return (a.m_data == b.m_data);
 }
 
-bool const CMyString::operator!=(CMyString const& other) const
+bool const operator!=(CMyString const& a, CMyString const& b)
 {
-	return !(*this == other);
+	return !(a == b);
 }
 
 CMyString const operator+(CMyString const& a, CMyString const& b)

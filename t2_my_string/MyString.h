@@ -16,8 +16,8 @@ public:
 	void Clear();
 	CMyString& operator+=(CMyString const& other);
 
-	bool const operator==(CMyString const& other) const;
-	bool const operator!=(CMyString const& other) const;
+	friend bool const operator==(CMyString const& a, CMyString const& b);
+	friend bool const operator!=(CMyString const& a, CMyString const& b);
 
 private:
 	CDynamicArray m_data;
