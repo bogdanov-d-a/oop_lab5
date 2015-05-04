@@ -226,3 +226,18 @@ BOOST_AUTO_TEST_CASE(TestStringComparison)
 	BOOST_CHECK(CMyString("abc") > CMyString());
 	BOOST_CHECK(CMyString("abc") <= CMyString("abcd"));
 }
+
+BOOST_AUTO_TEST_CASE(TestReadStringFromStream)
+{
+	istringstream iss("test string");
+	CMyString s;
+	iss >> s;
+	BOOST_CHECK(s == "test string");
+}
+
+BOOST_AUTO_TEST_CASE(TestWriteStringToStream)
+{
+	ostringstream oss;
+	oss << CMyString("test string");
+	BOOST_CHECK(oss.str() == "test string");
+}

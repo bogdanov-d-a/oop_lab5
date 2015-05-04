@@ -32,3 +32,6 @@ bool const operator<(CMyString const& a, CMyString const& b);
 bool const operator>(CMyString const& a, CMyString const& b);
 bool const operator<=(CMyString const& a, CMyString const& b);
 bool const operator>=(CMyString const& a, CMyString const& b);
+
+std::ostream& operator<<(std::ostream &out, CMyString const& str);
+std::istream& operator>>(std::istream &in, CMyString &str);

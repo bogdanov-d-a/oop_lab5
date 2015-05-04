@@ -128,3 +128,28 @@ bool const operator>=(CMyString const& a, CMyString const& b)
 {
 	return !(a < b);
 }
+
+ostream& operator<<(ostream &out, CMyString const& str)
+{
+	for (size_t i = 0; i < str.GetLength(); ++i)
+	{
+		out.put(str[i]);
+	}
+
+	return out;
+}
+
+istream& operator>>(istream &in, CMyString &str)
+{
+	str.Clear();
+
+	char curStr[2];
+	curStr[1] = '\0';
+
+	while (in.get(curStr[0]))
+	{
+		str += curStr;
+	}
+
+	return in;
+}

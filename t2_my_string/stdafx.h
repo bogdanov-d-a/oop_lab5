@@ -6,3 +6,5 @@
 #include <boost/test/unit_test.hpp>
 
 #include <stdexcept>
+#include <iostream>
+#include <sstream>
