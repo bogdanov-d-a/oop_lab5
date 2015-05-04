@@ -84,3 +84,37 @@ CMyString const operator+(CMyString const& a, CMyString const& b)
 	result += b;
 	return result;
 }
+
+bool const operator<(CMyString const& a, CMyString const& b)
+{
+	int const result = memcmp(a.GetStringData(), b.GetStringData(), min(a.GetLength(), b.GetLength()));
+
+	if (result != 0)
+	{
+		return (result < 0);
+	}
+
+	return (a.GetLength() < b.GetLength());
+}
+
+bool const operator>(CMyString const& a, CMyString const& b)
+{
+	int const result = memcmp(a.GetStringData(), b.GetStringData(), min(a.GetLength(), b.GetLength()));
+
+	if (result != 0)
+	{
+		return (result > 0);
+	}
+
+	return (a.GetLength() > b.GetLength());
+}
+
+bool const operator<=(CMyString const& a, CMyString const& b)
+{
+	return !(a > b);
+}
+
+bool const operator>=(CMyString const& a, CMyString const& b)
+{
+	return !(a < b);
+}

@@ -24,3 +24,8 @@ private:
 };
 
 CMyString const operator+(CMyString const& a, CMyString const& b);
+
+bool const operator<(CMyString const& a, CMyString const& b);
+bool const operator>(CMyString const& a, CMyString const& b);
+bool const operator<=(CMyString const& a, CMyString const& b);
+bool const operator>=(CMyString const& a, CMyString const& b);

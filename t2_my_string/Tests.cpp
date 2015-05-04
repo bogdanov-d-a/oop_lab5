@@ -218,3 +218,11 @@ BOOST_AUTO_TEST_CASE(TestConcatenation)
 	BOOST_CHECK("abc" + CMyString("def") == CMyString("abcdef"));
 	BOOST_CHECK(string("abc") + CMyString("def") == CMyString("abcdef"));
 }
+
+BOOST_AUTO_TEST_CASE(TestStringComparison)
+{
+	BOOST_CHECK(CMyString("abc") < CMyString("abd"));
+	BOOST_CHECK(CMyString("abcd") >= CMyString("abc"));
+	BOOST_CHECK(CMyString("abc") > CMyString());
+	BOOST_CHECK(CMyString("abc") <= CMyString("abcd"));
+}
