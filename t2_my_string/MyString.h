@@ -19,6 +19,9 @@ public:
 	friend bool const operator==(CMyString const& a, CMyString const& b);
 	friend bool const operator!=(CMyString const& a, CMyString const& b);
 
+	char const operator[](size_t index) const;
+	char& operator[](size_t index);
+
 private:
 	CDynamicArray m_data;
 };

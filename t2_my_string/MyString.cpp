@@ -78,6 +78,16 @@ bool const operator!=(CMyString const& a, CMyString const& b)
 	return !(a == b);
 }
 
+char const CMyString::operator[](size_t index) const
+{
+	return m_data[index];
+}
+
+char& CMyString::operator[](size_t index)
+{
+	return m_data[index];
+}
+
 CMyString const operator+(CMyString const& a, CMyString const& b)
 {
 	CMyString result(a);
