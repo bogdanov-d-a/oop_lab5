@@ -8,6 +8,9 @@ public:
 	CDynamicArray(CDynamicArray &&other);
 	~CDynamicArray();
 
+	CDynamicArray& operator=(CDynamicArray const& other);
+	CDynamicArray& operator=(CDynamicArray &&other);
+
 	char const operator[](size_t index) const;
 	char& operator[](size_t index);
 	bool const operator==(CDynamicArray const& other) const;

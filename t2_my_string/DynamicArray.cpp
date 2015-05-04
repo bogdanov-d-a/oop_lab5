@@ -11,6 +11,21 @@ CDynamicArray::CDynamicArray(size_t size)
 
 CDynamicArray::CDynamicArray(CDynamicArray const& other)
 {
+	*this = other;
+}
+
+CDynamicArray::CDynamicArray(CDynamicArray &&other)
+{
+	*this = move(other);
+}
+
+CDynamicArray::~CDynamicArray()
+{
+	free(m_data);
+}
+
+CDynamicArray& CDynamicArray::operator=(CDynamicArray const& other)
+{
 	m_size = other.m_size;
 	InitData();
 
@@ -18,20 +33,19 @@ CDynamicArray::CDynamicArray(CDynamicArray const& other)
 	{
 		memcpy(m_data, other.m_data, m_size);
 	}
+
+	return *this;
 }
 
-CDynamicArray::CDynamicArray(CDynamicArray &&other)
+CDynamicArray& CDynamicArray::operator=(CDynamicArray &&other)
 {
 	m_size = other.m_size;
 	m_data = other.m_data;
 
 	other.m_size = 0;
 	other.m_data = nullptr;
-}
 
-CDynamicArray::~CDynamicArray()
-{
-	free(m_data);
+	return *this;
 }
 
 char const CDynamicArray::operator[](size_t index) const
