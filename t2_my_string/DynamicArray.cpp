@@ -10,11 +10,13 @@ CDynamicArray::CDynamicArray(size_t size)
 }
 
 CDynamicArray::CDynamicArray(CDynamicArray const& other)
+	:CDynamicArray(0)
 {
 	*this = other;
 }
 
 CDynamicArray::CDynamicArray(CDynamicArray &&other)
+	:CDynamicArray(0)
 {
 	*this = move(other);
 }
@@ -26,7 +28,14 @@ CDynamicArray::~CDynamicArray()
 
 CDynamicArray& CDynamicArray::operator=(CDynamicArray const& other)
 {
+	if (this == &other)
+	{
+		return *this;
+	}
+
 	m_size = other.m_size;
+
+	free(m_data);
 	InitData();
 
 	if (m_size != 0)
@@ -39,7 +48,14 @@ CDynamicArray& CDynamicArray::operator=(CDynamicArray const& other)
 
 CDynamicArray& CDynamicArray::operator=(CDynamicArray &&other)
 {
+	if (this == &other)
+	{
+		return *this;
+	}
+
 	m_size = other.m_size;
+
+	free(m_data);
 	m_data = other.m_data;
 
 	other.m_size = 0;

@@ -93,7 +93,10 @@ BOOST_AUTO_TEST_CASE(TestDynamicArrayCopyAssignment)
 	a[0] = 'a';
 	a[1] = 'b';
 
-	CDynamicArray b = a;
+	CDynamicArray b(1);
+	b[0] = 'c';
+
+	b = a;
 	BOOST_CHECK(a == b);
 }
 
@@ -104,8 +107,27 @@ BOOST_AUTO_TEST_CASE(TestDynamicArrayMoveAssignment)
 	a[1] = 'b';
 
 	CDynamicArray b(a);
-	CDynamicArray c = move(b);
+
+	CDynamicArray c(1);
+	c[0] = 'c';
+
+	c = move(b);
 
 	BOOST_CHECK_EQUAL(b.GetSize(), 0);
 	BOOST_CHECK(a == c);
+}
+
+BOOST_AUTO_TEST_CASE(TestDynamicArraySelfAssignment)
+{
+	CDynamicArray a(2);
+	a[0] = 'a';
+	a[1] = 'b';
+
+	CDynamicArray b(a);
+
+	b = b;
+	BOOST_CHECK(a == b);
+
+	b = move(b);
+	BOOST_CHECK(a == b);
 }
