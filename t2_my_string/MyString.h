@@ -5,6 +5,8 @@
 class CMyString
 {
 public:
+	class CConstIterator;
+
 	CMyString();
 	CMyString(char const* pString);
 	CMyString(char const* pString, size_t length);
@@ -22,6 +24,9 @@ public:
 	char const operator[](size_t index) const;
 	char& operator[](size_t index);
 
+	CConstIterator begin() const;
+	CConstIterator end() const;
+
 private:
 	CDynamicArray m_data;
 };
@@ -35,3 +40,122 @@ bool const operator>=(CMyString const& a, CMyString const& b);
 
 std::ostream& operator<<(std::ostream &out, CMyString const& str);
 std::istream& operator>>(std::istream &in, CMyString &str);
+
+class CMyString::CConstIterator
+	:public std::iterator<std::random_access_iterator_tag, char>
+{
+public:
+	inline CConstIterator()
+		:m_ptr(nullptr)
+	{}
+
+	inline CConstIterator(char const* ptr)
+		:m_ptr(ptr)
+	{}
+
+	inline bool const operator==(CConstIterator const& other) const
+	{
+		return (m_ptr == other.m_ptr);
+	}
+
+	inline bool const operator!=(CConstIterator const& other) const
+	{
+		return !(*this == other);
+	}
+
+	inline char const& operator*() const
+	{
+		return *m_ptr;
+	}
+
+	inline char const* operator->() const
+	{
+		return m_ptr;
+	}
+
+	inline CConstIterator& operator++()
+	{
+		++m_ptr;
+		return *this;
+	}
+
+	inline CConstIterator operator++(int)
+	{
+		CConstIterator old(*this);
+		++m_ptr;
+		return old;
+	}
+
+	inline CConstIterator& operator--()
+	{
+		--m_ptr;
+		return *this;
+	}
+
+	inline CConstIterator operator--(int)
+	{
+		CConstIterator old(*this);
+		--m_ptr;
+		return old;
+	}
+
+	inline CConstIterator operator+(int n) const
+	{
+		return CConstIterator(m_ptr + n);
+	}
+
+	inline friend CConstIterator operator+(int n, CConstIterator const& it)
+	{
+		return CConstIterator(it.m_ptr + n);
+	}
+
+	inline CConstIterator operator-(int n) const
+	{
+		return CConstIterator(m_ptr - n);
+	}
+
+	inline int operator-(CConstIterator const& other) const
+	{
+		return (m_ptr - other.m_ptr);
+	}
+
+	inline bool const operator<(CConstIterator const& other) const
+	{
+		return (m_ptr < other.m_ptr);
+	}
+
+	inline bool const operator>(CConstIterator const& other) const
+	{
+		return (m_ptr > other.m_ptr);
+	}
+
+	inline bool const operator<=(CConstIterator const& other) const
+	{
+		return !(*this > other);
+	}
+
+	inline bool const operator>=(CConstIterator const& other) const
+	{
+		return !(*this < other);
+	}
+
+	inline CConstIterator& operator+=(int n)
+	{
+		m_ptr += n;
+		return *this;
+	}
+
+	inline CConstIterator& operator-=(int n)
+	{
+		m_ptr -= n;
+		return *this;
+	}
+
+	inline char const& operator[](int n) const
+	{
+		return m_ptr[n];
+	}
+
+private:
+	char const* m_ptr;
+};

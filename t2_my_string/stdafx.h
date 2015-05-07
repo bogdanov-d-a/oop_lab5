@@ -8,3 +8,4 @@
 #include <stdexcept>
 #include <iostream>
 #include <sstream>
+#include <iterator>

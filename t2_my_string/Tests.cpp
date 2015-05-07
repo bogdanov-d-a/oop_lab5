@@ -241,3 +241,123 @@ BOOST_AUTO_TEST_CASE(TestWriteStringToStream)
 	oss << CMyString("test string");
 	BOOST_CHECK(oss.str() == "test string");
 }
+
+struct ConstIteratorFixture
+{
+	CMyString const str;
+	CMyString::CConstIterator it;
+
+	ConstIteratorFixture()
+		:str("test string")
+		,it(str.begin())
+	{}
+};
+
+BOOST_FIXTURE_TEST_SUITE(ConstIterator, ConstIteratorFixture);
+
+BOOST_AUTO_TEST_CASE(TestConstIteratorEquality)
+{
+	{
+		CMyString::CConstIterator it2(it);
+		BOOST_CHECK(it == it2);
+		BOOST_CHECK(!(it != it2));
+	}
+	{
+		CMyString::CConstIterator empty;
+		BOOST_CHECK(it != empty);
+		BOOST_CHECK(!(it == empty));
+	}
+}
+
+BOOST_AUTO_TEST_CASE(TestConstIteratorDereference)
+{
+	BOOST_CHECK_EQUAL(*it, 't');
+}
+
+BOOST_AUTO_TEST_CASE(TestConstIteratorPredIncrement)
+{
+	auto retIt = ++it;
+	BOOST_CHECK_EQUAL(*retIt, 'e');
+	BOOST_CHECK_EQUAL(*it, 'e');
+}
+
+BOOST_AUTO_TEST_CASE(TestConstIteratorPostIncrement)
+{
+	auto oldIt = it++;
+	BOOST_CHECK_EQUAL(*oldIt, 't');
+	BOOST_CHECK_EQUAL(*it, 'e');
+}
+
+BOOST_AUTO_TEST_CASE(TestConstIteratorPredDecrement)
+{
+	++it;
+
+	auto retIt = --it;
+	BOOST_CHECK_EQUAL(*retIt, 't');
+	BOOST_CHECK_EQUAL(*it, 't');
+}
+
+BOOST_AUTO_TEST_CASE(TestConstIteratorPostDecrement)
+{
+	++it;
+
+	auto oldIt = it--;
+	BOOST_CHECK_EQUAL(*oldIt, 'e');
+	BOOST_CHECK_EQUAL(*it, 't');
+}
+
+BOOST_AUTO_TEST_CASE(TestConstIteratorAddition)
+{
+	BOOST_CHECK_EQUAL(*(it + 4), ' ');
+	BOOST_CHECK_EQUAL(*((-1) + (it + 2)), 'e');
+	BOOST_CHECK((it + 0) == it);
+
+	it += 7;
+	BOOST_CHECK_EQUAL(*it, 'r');
+}
+
+BOOST_AUTO_TEST_CASE(TestConstIteratorSubtraction)
+{
+	it = str.end();
+	--it;
+
+	BOOST_CHECK_EQUAL(*(it - 2), 'i');
+	BOOST_CHECK_EQUAL(*((it - 5) - (-2)), 'r');
+	BOOST_CHECK((it - 0) == it);
+	
+	BOOST_CHECK_EQUAL((it - 2) - (it - 5), 3);
+	BOOST_CHECK_EQUAL((it - 5) - (it - 2), -3);
+
+	it -= 6;
+	BOOST_CHECK_EQUAL(*it, ' ');
+}
+
+BOOST_AUTO_TEST_CASE(TestConstIteratorComarison)
+{
+	BOOST_CHECK(it < it + 3);
+	BOOST_CHECK(!(it >= it + 3));
+
+	BOOST_CHECK(it <= it + 1);
+	BOOST_CHECK(!(it > it + 1));
+
+	BOOST_CHECK(it + 6 > it + 5);
+	BOOST_CHECK(!(it + 6 <= it + 5));
+
+	BOOST_CHECK(it + 2 >= it);
+	BOOST_CHECK(!(it + 2 < it));
+
+	BOOST_CHECK(it >= it);
+	BOOST_CHECK(it <= it);
+	BOOST_CHECK(!(it > it));
+	BOOST_CHECK(!(it < it));
+}
+
+BOOST_AUTO_TEST_CASE(TestConstIteratorOffsetDereference)
+{
+	BOOST_CHECK_EQUAL(it[2], 's');
+	BOOST_CHECK_EQUAL(it[4], ' ');
+	BOOST_CHECK_EQUAL(it[0], 't');
+	BOOST_CHECK_EQUAL((it + 10)[-3], 'r');
+}
+
+BOOST_AUTO_TEST_SUITE_END()

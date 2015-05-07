@@ -88,6 +88,16 @@ char& CMyString::operator[](size_t index)
 	return m_data[index];
 }
 
+CMyString::CConstIterator CMyString::begin() const
+{
+	return CConstIterator(m_data.GetData());
+}
+
+CMyString::CConstIterator CMyString::end() const
+{
+	return CConstIterator(m_data.GetData() + GetLength());
+}
+
 CMyString const operator+(CMyString const& a, CMyString const& b)
 {
 	CMyString result(a);
