@@ -45,113 +45,108 @@ class CMyString::CConstIterator
 	:public std::iterator<std::random_access_iterator_tag, char>
 {
 public:
-	inline CConstIterator()
+	CConstIterator()
 		:m_ptr(nullptr)
 	{}
 
-	inline CConstIterator(char const* ptr)
+	CConstIterator(char const* ptr)
 		:m_ptr(ptr)
 	{}
 
-	inline bool const operator==(CConstIterator const& other) const
+	bool const operator==(CConstIterator const& other) const
 	{
 		return (m_ptr == other.m_ptr);
 	}
 
-	inline bool const operator!=(CConstIterator const& other) const
+	bool const operator!=(CConstIterator const& other) const
 	{
 		return !(*this == other);
 	}
 
-	inline char const& operator*() const
+	char const& operator*() const
 	{
 		return *m_ptr;
 	}
 
-	inline char const* operator->() const
-	{
-		return m_ptr;
-	}
-
-	inline CConstIterator& operator++()
+	CConstIterator& operator++()
 	{
 		++m_ptr;
 		return *this;
 	}
 
-	inline CConstIterator operator++(int)
+	CConstIterator operator++(int)
 	{
 		CConstIterator old(*this);
 		++m_ptr;
 		return old;
 	}
 
-	inline CConstIterator& operator--()
+	CConstIterator& operator--()
 	{
 		--m_ptr;
 		return *this;
 	}
 
-	inline CConstIterator operator--(int)
+	CConstIterator operator--(int)
 	{
 		CConstIterator old(*this);
 		--m_ptr;
 		return old;
 	}
 
-	inline CConstIterator operator+(int n) const
+	CConstIterator operator+(int n) const
 	{
 		return CConstIterator(m_ptr + n);
 	}
 
-	inline friend CConstIterator operator+(int n, CConstIterator const& it)
+	friend CConstIterator operator+(int n, CConstIterator const& it)
 	{
 		return CConstIterator(it.m_ptr + n);
 	}
 
-	inline CConstIterator operator-(int n) const
+	CConstIterator operator-(int n) const
 	{
 		return CConstIterator(m_ptr - n);
 	}
 
-	inline int operator-(CConstIterator const& other) const
+	int operator-(CConstIterator const& other) const
 	{
 		return (m_ptr - other.m_ptr);
 	}
 
-	inline bool const operator<(CConstIterator const& other) const
+	bool const operator<(CConstIterator const& other) const
 	{
 		return (m_ptr < other.m_ptr);
 	}
 
-	inline bool const operator>(CConstIterator const& other) const
+	bool const operator>(CConstIterator const& other) const
 	{
 		return (m_ptr > other.m_ptr);
 	}
 
-	inline bool const operator<=(CConstIterator const& other) const
+	bool const operator<=(CConstIterator const& other) const
 	{
 		return !(*this > other);
 	}
 
-	inline bool const operator>=(CConstIterator const& other) const
+	bool const operator>=(CConstIterator const& other) const
 	{
 		return !(*this < other);
 	}
 
-	inline CConstIterator& operator+=(int n)
+	CConstIterator& operator+=(int n)
 	{
 		m_ptr += n;
 		return *this;
 	}
 
-	inline CConstIterator& operator-=(int n)
+	CConstIterator& operator-=(int n)
 	{
 		m_ptr -= n;
 		return *this;
 	}
 
-	inline char const& operator[](int n) const
+	char const& operator[](int n) const
 	{
 		return m_ptr[n];
 	}

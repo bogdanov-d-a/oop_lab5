@@ -253,7 +253,7 @@ struct ConstIteratorFixture
 	{}
 };
 
-BOOST_FIXTURE_TEST_SUITE(ConstIterator, ConstIteratorFixture);
+BOOST_FIXTURE_TEST_SUITE(ConstIterator, ConstIteratorFixture)
 
 BOOST_AUTO_TEST_CASE(TestConstIteratorEquality)
 {
