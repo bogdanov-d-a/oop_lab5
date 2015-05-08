@@ -251,6 +251,8 @@ struct ConstIteratorFixture
 		:str("test string")
 		,it(str.begin())
 	{}
+
+	ConstIteratorFixture& operator=(ConstIteratorFixture const& other) = delete;
 };
 
 BOOST_FIXTURE_TEST_SUITE(ConstIterator, ConstIteratorFixture)
