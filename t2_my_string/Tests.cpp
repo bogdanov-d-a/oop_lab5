@@ -363,3 +363,129 @@ BOOST_AUTO_TEST_CASE(TestConstIteratorOffsetDereference)
 }
 
 BOOST_AUTO_TEST_SUITE_END()
+
+struct IteratorFixture
+{
+	CMyString str;
+	CMyString::CIterator it;
+	CMyString::CConstIterator &asConstIt;
+
+	IteratorFixture()
+		:str("test string")
+		,it(str.begin())
+		,asConstIt(it)
+	{}
+
+	IteratorFixture& operator=(IteratorFixture const& other) = delete;
+};
+
+BOOST_FIXTURE_TEST_SUITE(Iterator, IteratorFixture)
+
+BOOST_AUTO_TEST_CASE(TestIteratorEquality)
+{
+	BOOST_CHECK(it == it);
+	BOOST_CHECK(!(it != it));
+
+	BOOST_CHECK(asConstIt == it);
+	BOOST_CHECK(!(asConstIt != it));
+
+	BOOST_CHECK(it == asConstIt);
+	BOOST_CHECK(!(it != asConstIt));
+}
+
+BOOST_AUTO_TEST_CASE(TestIteratorDereference)
+{
+	*it = ' ';
+	BOOST_CHECK(str == " est string");
+}
+
+BOOST_AUTO_TEST_CASE(TestIteratorPredIncrement)
+{
+	CMyString::CIterator retIt = ++it;
+	BOOST_CHECK_EQUAL(*retIt, 'e');
+	BOOST_CHECK_EQUAL(*it, 'e');
+}
+
+BOOST_AUTO_TEST_CASE(TestIteratorPostIncrement)
+{
+	CMyString::CIterator retIt = it++;
+	BOOST_CHECK_EQUAL(*retIt, 't');
+	BOOST_CHECK_EQUAL(*it, 'e');
+}
+
+BOOST_AUTO_TEST_CASE(TestIteratorPredDecrement)
+{
+	++it;
+
+	CMyString::CIterator retIt = --it;
+	BOOST_CHECK_EQUAL(*retIt, 't');
+	BOOST_CHECK_EQUAL(*it, 't');
+}
+
+BOOST_AUTO_TEST_CASE(TestIteratorPostDecrement)
+{
+	++it;
+
+	CMyString::CIterator retIt = it--;
+	BOOST_CHECK_EQUAL(*retIt, 'e');
+	BOOST_CHECK_EQUAL(*it, 't');
+}
+
+BOOST_AUTO_TEST_CASE(TestIteratorAddition)
+{
+	BOOST_CHECK_EQUAL(*static_cast<CMyString::CIterator>(it + 4), ' ');
+	BOOST_CHECK_EQUAL(*static_cast<CMyString::CIterator>((-1) + static_cast<CMyString::CIterator>(it + 2)), 'e');
+	BOOST_CHECK(static_cast<CMyString::CIterator>(it + 0) == it);
+
+	static_cast<CMyString::CIterator>(it += 7);
+	BOOST_CHECK_EQUAL(*it, 'r');
+}
+
+BOOST_AUTO_TEST_CASE(TestIteratorSubtraction)
+{
+	it = str.end();
+	--it;
+
+	BOOST_CHECK_EQUAL(*static_cast<CMyString::CIterator>(it - 2), 'i');
+	BOOST_CHECK_EQUAL(*static_cast<CMyString::CIterator>(static_cast<CMyString::CIterator>(it - 5) - (-2)), 'r');
+	BOOST_CHECK(static_cast<CMyString::CIterator>(it - 0) == it);
+
+	BOOST_CHECK_EQUAL(static_cast<CMyString::CIterator>(it - 2) - static_cast<CMyString::CIterator>(it - 5), 3);
+	BOOST_CHECK_EQUAL(static_cast<CMyString::CIterator>(it - 5) - static_cast<CMyString::CIterator>(it - 2), -3);
+
+	static_cast<CMyString::CIterator>(it -= 6);
+	BOOST_CHECK_EQUAL(*it, ' ');
+
+	BOOST_CHECK_EQUAL(it - it, 0);
+	BOOST_CHECK_EQUAL(asConstIt - it, 0);
+	BOOST_CHECK_EQUAL(it - asConstIt, 0);
+}
+
+BOOST_AUTO_TEST_CASE(TestIteratorComarison)
+{
+	BOOST_CHECK(!(it < it));
+	BOOST_CHECK(!(asConstIt < it));
+	BOOST_CHECK(!(it < asConstIt));
+
+	BOOST_CHECK(!(it > it));
+	BOOST_CHECK(!(asConstIt > it));
+	BOOST_CHECK(!(it > asConstIt));
+
+	BOOST_CHECK(it <= it);
+	BOOST_CHECK(asConstIt <= it);
+	BOOST_CHECK(it <= asConstIt);
+
+	BOOST_CHECK(it >= it);
+	BOOST_CHECK(asConstIt >= it);
+	BOOST_CHECK(it >= asConstIt);
+}
+
+BOOST_AUTO_TEST_CASE(TestIteratorOffsetDereference)
+{
+	BOOST_CHECK_EQUAL(static_cast<char&>(it[2]), 's');
+	BOOST_CHECK_EQUAL(static_cast<char&>(it[4]), ' ');
+	BOOST_CHECK_EQUAL(static_cast<char&>(it[0]), 't');
+	BOOST_CHECK_EQUAL(static_cast<char&>((it + 10)[-3]), 'r');
+}
+
+BOOST_AUTO_TEST_SUITE_END()

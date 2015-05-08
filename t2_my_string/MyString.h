@@ -6,6 +6,7 @@ class CMyString
 {
 public:
 	class CConstIterator;
+	class CIterator;
 
 	CMyString();
 	CMyString(char const* pString);
@@ -26,6 +27,9 @@ public:
 
 	CConstIterator begin() const;
 	CConstIterator end() const;
+
+	CIterator begin();
+	CIterator end();
 
 private:
 	CDynamicArray m_data;
@@ -51,6 +55,9 @@ public:
 
 	CConstIterator(char const* ptr)
 		:m_ptr(ptr)
+	{}
+
+	virtual ~CConstIterator()
 	{}
 
 	bool const operator==(CConstIterator const& other) const
@@ -109,9 +116,9 @@ public:
 		return CConstIterator(m_ptr - n);
 	}
 
-	int operator-(CConstIterator const& other) const
+	friend int operator-(CConstIterator const& a, CConstIterator const& b)
 	{
-		return (m_ptr - other.m_ptr);
+		return (a.m_ptr - b.m_ptr);
 	}
 
 	bool const operator<(CConstIterator const& other) const
@@ -151,6 +158,87 @@ public:
 		return m_ptr[n];
 	}
 
-private:
+protected:
 	char const* m_ptr;
+};
+
+class CMyString::CIterator
+	:public CConstIterator
+{
+public:
+	CIterator()
+	{}
+
+	CIterator(char *ptr)
+		:CConstIterator(ptr)
+	{}
+
+	char& operator*() const
+	{
+		return *GetPtr();
+	}
+
+	CIterator& operator++()
+	{
+		CConstIterator::operator++();
+		return *this;
+	}
+
+	CIterator operator++(int)
+	{
+		CIterator old(*this);
+		CConstIterator::operator++();
+		return old;
+	}
+
+	CIterator& operator--()
+	{
+		CConstIterator::operator--();
+		return *this;
+	}
+
+	CIterator operator--(int)
+	{
+		CIterator old(*this);
+		CConstIterator::operator--();
+		return old;
+	}
+
+	CIterator operator+(int n) const
+	{
+		return CIterator(GetPtr() + n);
+	}
+
+	friend CIterator operator+(int n, CIterator const& it)
+	{
+		return CIterator(it.GetPtr() + n);
+	}
+
+	CIterator operator-(int n) const
+	{
+		return CIterator(GetPtr() - n);
+	}
+
+	CIterator& operator+=(int n)
+	{
+		CConstIterator::operator+=(n);
+		return *this;
+	}
+
+	CIterator& operator-=(int n)
+	{
+		CConstIterator::operator-=(n);
+		return *this;
+	}
+
+	char& operator[](int n) const
+	{
+		return GetPtr()[n];
+	}
+
+private:
+	char* GetPtr() const
+	{
+		return const_cast<char*>(m_ptr);
+	}
 };

@@ -98,6 +98,16 @@ CMyString::CConstIterator CMyString::end() const
 	return CConstIterator(m_data.GetData() + GetLength());
 }
 
+CMyString::CIterator CMyString::begin()
+{
+	return CIterator(m_data.GetData());
+}
+
+CMyString::CIterator CMyString::end()
+{
+	return CIterator(m_data.GetData() + GetLength());
+}
+
 CMyString const operator+(CMyString const& a, CMyString const& b)
 {
 	CMyString result(a);
