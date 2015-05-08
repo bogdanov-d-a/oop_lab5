@@ -489,3 +489,29 @@ BOOST_AUTO_TEST_CASE(TestIteratorOffsetDereference)
 }
 
 BOOST_AUTO_TEST_SUITE_END()
+
+BOOST_AUTO_TEST_CASE(TestConstReverseIterator)
+{
+	CMyString const str("now step live...");
+	string out;
+
+	for (CMyString::CConstReverseIterator it = str.rbegin(); it != str.rend(); ++it)
+	{
+		out.push_back(*it);
+	}
+
+	BOOST_CHECK_EQUAL(out, "...evil pets won");
+}
+
+BOOST_AUTO_TEST_CASE(TestReverseIterator)
+{
+	CMyString str("now step live...");
+	string out;
+
+	for (CMyString::CReverseIterator it = str.rbegin(); it != str.rend(); ++it)
+	{
+		out.push_back(*it);
+	}
+
+	BOOST_CHECK_EQUAL(out, "...evil pets won");
+}

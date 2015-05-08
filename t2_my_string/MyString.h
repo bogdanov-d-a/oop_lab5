@@ -7,6 +7,8 @@ class CMyString
 public:
 	class CConstIterator;
 	class CIterator;
+	typedef std::reverse_iterator<CConstIterator> CConstReverseIterator;
+	typedef std::reverse_iterator<CIterator> CReverseIterator;
 
 	CMyString();
 	CMyString(char const* pString);
@@ -31,6 +33,12 @@ public:
 	CIterator begin();
 	CIterator end();
 
+	CConstReverseIterator rbegin() const;
+	CConstReverseIterator rend() const;
+
+	CReverseIterator rbegin();
+	CReverseIterator rend();
+
 private:
 	CDynamicArray m_data;
 };
@@ -49,6 +57,8 @@ class CMyString::CConstIterator
 	:public std::iterator<std::random_access_iterator_tag, char>
 {
 public:
+	typedef char const& reference;
+
 	CConstIterator()
 		:m_ptr(nullptr)
 	{}
@@ -70,7 +80,7 @@ public:
 		return !(*this == other);
 	}
 
-	char const& operator*() const
+	reference operator*() const
 	{
 		return *m_ptr;
 	}
@@ -153,7 +163,7 @@ public:
 		return *this;
 	}
 
-	char const& operator[](int n) const
+	reference operator[](int n) const
 	{
 		return m_ptr[n];
 	}
@@ -166,6 +176,8 @@ class CMyString::CIterator
 	:public CConstIterator
 {
 public:
+	typedef char& reference;
+
 	CIterator()
 	{}
 
@@ -173,7 +185,7 @@ public:
 		:CConstIterator(ptr)
 	{}
 
-	char& operator*() const
+	reference operator*() const
 	{
 		return *GetPtr();
 	}
@@ -231,7 +243,7 @@ public:
 		return *this;
 	}
 
-	char& operator[](int n) const
+	reference operator[](int n) const
 	{
 		return GetPtr()[n];
 	}

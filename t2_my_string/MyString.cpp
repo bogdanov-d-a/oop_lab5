@@ -108,6 +108,26 @@ CMyString::CIterator CMyString::end()
 	return CIterator(m_data.GetData() + GetLength());
 }
 
+CMyString::CConstReverseIterator CMyString::rbegin() const
+{
+	return CConstReverseIterator(end());
+}
+
+CMyString::CConstReverseIterator CMyString::rend() const
+{
+	return CConstReverseIterator(begin());
+}
+
+CMyString::CReverseIterator CMyString::rbegin()
+{
+	return CReverseIterator(end());
+}
+
+CMyString::CReverseIterator CMyString::rend()
+{
+	return CReverseIterator(begin());
+}
+
 CMyString const operator+(CMyString const& a, CMyString const& b)
 {
 	CMyString result(a);
