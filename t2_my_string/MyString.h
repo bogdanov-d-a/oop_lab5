@@ -61,10 +61,12 @@ public:
 
 	CConstIterator()
 		:m_ptr(nullptr)
+		,m_target(nullptr)
 	{}
 
-	CConstIterator(char const* ptr)
+	CConstIterator(char const* ptr, CMyString const* target)
 		:m_ptr(ptr)
+		,m_target(target)
 	{}
 
 	virtual ~CConstIterator()
@@ -82,12 +84,14 @@ public:
 
 	reference operator*() const
 	{
+		assert(IsDereferenceable());
 		return *m_ptr;
 	}
 
 	CConstIterator& operator++()
 	{
 		++m_ptr;
+		assert(IsValid());
 		return *this;
 	}
 
@@ -95,12 +99,14 @@ public:
 	{
 		CConstIterator old(*this);
 		++m_ptr;
+		assert(IsValid());
 		return old;
 	}
 
 	CConstIterator& operator--()
 	{
 		--m_ptr;
+		assert(IsValid());
 		return *this;
 	}
 
@@ -108,22 +114,25 @@ public:
 	{
 		CConstIterator old(*this);
 		--m_ptr;
+		assert(IsValid());
 		return old;
 	}
 
 	CConstIterator operator+(int n) const
 	{
-		return CConstIterator(m_ptr + n);
+		auto result = CConstIterator(m_ptr + n, m_target);
+		assert(result.IsValid());
+		return result;
 	}
 
 	friend CConstIterator operator+(int n, CConstIterator const& it)
 	{
-		return CConstIterator(it.m_ptr + n);
+		return it + n;
 	}
 
 	CConstIterator operator-(int n) const
 	{
-		return CConstIterator(m_ptr - n);
+		return *this + (-n);
 	}
 
 	friend int operator-(CConstIterator const& a, CConstIterator const& b)
@@ -154,22 +163,47 @@ public:
 	CConstIterator& operator+=(int n)
 	{
 		m_ptr += n;
+		assert(IsValid());
 		return *this;
 	}
 
 	CConstIterator& operator-=(int n)
 	{
 		m_ptr -= n;
+		assert(IsValid());
 		return *this;
 	}
 
 	reference operator[](int n) const
 	{
+		assert(IsDereferenceable(n));
 		return m_ptr[n];
 	}
 
 protected:
 	char const* m_ptr;
+	CMyString const* m_target;
+
+	bool IsDereferenceable(int offset = 0) const
+	{
+		if (m_target == nullptr)
+		{
+			return false;
+		}
+
+		auto resultIt = *this;
+		if (offset != 0)
+		{
+			resultIt += offset;
+		}
+
+		return (resultIt >= m_target->begin() && resultIt < m_target->end());
+	}
+
+	bool IsValid() const
+	{
+		return (IsDereferenceable() || *this == m_target->end());
+	}
 };
 
 class CMyString::CIterator
@@ -181,12 +215,13 @@ public:
 	CIterator()
 	{}
 
-	CIterator(char *ptr)
-		:CConstIterator(ptr)
+	CIterator(char *ptr, CMyString const* target)
+		:CConstIterator(ptr, target)
 	{}
 
 	reference operator*() const
 	{
+		assert(IsDereferenceable());
 		return *GetPtr();
 	}
 
@@ -218,17 +253,19 @@ public:
 
 	CIterator operator+(int n) const
 	{
-		return CIterator(GetPtr() + n);
+		auto result = CIterator(GetPtr() + n, m_target);
+		assert(result.IsValid());
+		return result;
 	}
 
 	friend CIterator operator+(int n, CIterator const& it)
 	{
-		return CIterator(it.GetPtr() + n);
+		return it + n;
 	}
 
 	CIterator operator-(int n) const
 	{
-		return CIterator(GetPtr() - n);
+		return *this + (-n);
 	}
 
 	CIterator& operator+=(int n)
@@ -245,6 +282,7 @@ public:
 
 	reference operator[](int n) const
 	{
+		assert(IsDereferenceable(n));
 		return GetPtr()[n];
 	}
 

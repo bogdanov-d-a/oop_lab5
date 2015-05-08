@@ -90,22 +90,22 @@ char& CMyString::operator[](size_t index)
 
 CMyString::CConstIterator CMyString::begin() const
 {
-	return CConstIterator(m_data.GetData());
+	return CConstIterator(m_data.GetData(), this);
 }
 
 CMyString::CConstIterator CMyString::end() const
 {
-	return CConstIterator(m_data.GetData() + GetLength());
+	return CConstIterator(m_data.GetData() + GetLength(), this);
 }
 
 CMyString::CIterator CMyString::begin()
 {
-	return CIterator(m_data.GetData());
+	return CIterator(m_data.GetData(), this);
 }
 
 CMyString::CIterator CMyString::end()
 {
-	return CIterator(m_data.GetData() + GetLength());
+	return CIterator(m_data.GetData() + GetLength(), this);
 }
 
 CMyString::CConstReverseIterator CMyString::rbegin() const
