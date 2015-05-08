@@ -515,3 +515,16 @@ BOOST_AUTO_TEST_CASE(TestReverseIterator)
 
 	BOOST_CHECK_EQUAL(out, "...evil pets won");
 }
+
+BOOST_AUTO_TEST_CASE(RangeBasedForSupported)
+{
+	CMyString const str("test string");
+	string out;
+
+	for (char ch : str)
+	{
+		out.push_back(ch);
+	}
+
+	BOOST_CHECK_EQUAL(out, "test string");
+}
